@@ -18,21 +18,57 @@ direct control via a terminal.
 Usage
 =====
 
+Create an MDC object
+
 .. code-block:: python
 
-    from samsung_mdc import MultipleDisplayControl
-    mdc = MultipleDisplayControl(192.168.1.100)
-    mdc.power  # print power status
-    mdc.power = !mdc.power  # toggle power
-    mdc.get_power()  # print new power status
-    mdc.set_power(False)  # off
+    >>> from samsung_mdc import MultipleDisplayControl
+    >>> mdc = MultipleDisplayControl(192.168.1.100)
+    >>> print(mdc)
+    MDC #0xfe @192.168.1.100:1515
 
-Or as self destruction object:
+By default no socket connection is initiated:
+
+.. code-block:: python
+
+    >>> print(mdc.connected)
+    False
+
+Connect to the remote socket
+
+.. code-block:: python
+
+    >>> mdc.connect()
+    >>> print(mdc.connected)
+    True
+
+Control the TV
+
+.. code-block:: python
+
+    >>> mdc.power  # print power status
+    False
+    >>> mdc.power = !mdc.power  # toggle power
+    >>> mdc.get_power()  # print new power status
+    1
+    >>> mdc.set_power(False)  # off
+
+Close the 
+
+.. code-block:: python
+
+    >>> mdc.close()
+    >>> print(mdc.connected)
+    False
+
+
+Using the `with` statement the connection is initiated and terminated:
 
 .. code-block:: python
 
     with MultipleDisplayControl(192.168.1.100) as mdc:
         print(mdc)
+        print(mdc.connected)
         mdc.power = True
         mdc.source = 'hdmi2'
         mdc.safety_lock = True

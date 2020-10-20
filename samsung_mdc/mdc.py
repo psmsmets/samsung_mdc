@@ -72,12 +72,18 @@ class MultipleDisplayControl(object):
         Example:
         --------
 
+        Create an MDC object and connect to the remote socket:
+
         >>> mdc = MultipleDisplayControl(192.168.1.100)
+        >>> mdc.connect()
         >>> mdc.power  # print power status
         >>> mdc.power = !mdc.power  # toggle power
         >>> mdc.power  # print new power status
+        >>> mdc.close()
 
-        Or as self destruction object:
+        Or using the `with` statement. Now the connection is initiated and
+        terminated automatically:
+
         >>> with MultipleDisplayControl(192.168.1.100) as mdc:
                 print(mdc)
                 mdc.power = True
