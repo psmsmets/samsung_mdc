@@ -65,7 +65,7 @@ class MultipleDisplayControl(object):
     )
 
     def __init__(self, host: str = None, port: int = None,
-                 mdc_id: int = None, attrs: dict = None):
+                 mdc_id: int = None, attrs: dict = None, **kwargs):
         """Construct a Multiple Display Control (MDC) object.
 
         Parameters:
@@ -81,6 +81,9 @@ class MultipleDisplayControl(object):
 
         attrs : `dict`
             Dictionary of global attributes on this object
+
+        **kwargs :
+            Any kwargs are added to the global attributes.
 
         Example:
         --------
@@ -105,6 +108,8 @@ class MultipleDisplayControl(object):
         """
         self.__connected = False
         self.__attrs = dict(attrs) if attrs is not None else None
+        if kwargs:
+            self.attrs = {**self.attrs, **kwargs}
 
         self.__id = mdc_id or 254
         if not isinstance(self.__id, int):
