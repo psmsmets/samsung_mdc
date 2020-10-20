@@ -21,7 +21,7 @@ Usage
 Class
 -----
 
-Create a Samsung Multiple Display Control object:
+Create a Samsung Multiple Display Control object
 
 .. code-block:: python
 
@@ -30,7 +30,7 @@ Create a Samsung Multiple Display Control object:
     >>> print(mdc)
     MDC #0xfe @192.168.1.100:1515
 
-By default connection is initiated by the socket:
+By default no connection is initiated by the socket
 
 .. code-block:: python
 
@@ -65,7 +65,7 @@ Close the connection
     False
 
 Using the ``with`` statement the connection is initiated and terminated
-automatically:
+automatically
 
 .. code-block:: python
 
