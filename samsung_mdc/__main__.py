@@ -13,6 +13,7 @@ import argparse
 # relative imports
 from samsung_mdc import MultipleDisplayControl, __version__
 
+
 def main():
     """A simple command-line-tool for direct control of the Samsung Multiple
     Display Control Protocol via TCP/IP
@@ -58,14 +59,15 @@ def main():
     with MultipleDisplayControl(args.host, args.port, args.id) as ctrl:
         print(ctrl, end=' .. ')
         if len(args.args) == 0:
-             # get
-             value = eval(f'ctrl.get_{args.command}()')
-             print(f'{args.command} is {value}')
+            # get
+            value = eval(f'ctrl.get_{args.command}()')
+            print(f'{args.command} is {value}')
         else:
-             # get
-             eval(f'ctrl.set_{args.command}(*args.args)')
-             args.args = args.args[0] if len(args.args) == 1 else args.args
-             print(f'{args.command} set to {args.args}')
+            # get
+            eval(f'ctrl.set_{args.command}(*args.args)')
+            args.args = args.args[0] if len(args.args) == 1 else args.args
+            print(f'{args.command} set to {args.args}')
+
 
 if __name__ == "__main__":
     main()
