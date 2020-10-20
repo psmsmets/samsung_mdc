@@ -78,11 +78,13 @@ Command-line-tool
 -----------------
 
 In the terminal execute
+
 .. code-block:: console
 
     >>> samsung_mdc --help
 
 to show this help message and exit
+
 .. code-block:: console
 
     usage: samsung_mdc [-h] [-p ..] [-i ..] [--version]
