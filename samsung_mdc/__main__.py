@@ -23,7 +23,7 @@ def main():
         description='Samsung Multiple Display Control Protocol via TCP/IP',
     )
     parser.add_argument(
-        'host', metavar='..', type=str,
+        'host', metavar='host', type=str,
         help='Remote TV ipv4-address'
     )
     parser.add_argument(
@@ -32,12 +32,13 @@ def main():
             'video_wall_mode', 'safety_lock', 'video_wall_on',
             'video_wall_user',
         ),
-        help='Control command name'
+        help=('Control command name.')
     )
     parser.add_argument(
-        'args', metavar='args', default=[], type=int, nargs='*',
-        help=('Set the command argument(s). If empty (default) command control '
-              'state is returned.')
+        'data', metavar='data', default=[], type=int, nargs='*',
+        help=('Data argument(s) for the set control command (controlling). '
+              'If empty (default), set get control command is returned '
+              '(viewing control state).')
     )
     parser.add_argument(
         '-p', '--port', metavar='..', type=int, default=1515,

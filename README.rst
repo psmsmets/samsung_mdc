@@ -11,9 +11,61 @@ A fork of Damien PLENARD's `python-mdc <https://git.vpgrp.io/noc/python-mdc>`_.
 Features
 ========
 
-Provides a class ``MultipleDisplayControl`` to initiate the Samsung Multiple
-Display Control object as well as a simple command-line-tool for direct control
-via a terminal.
+Provides a Python3 class ``MultipleDisplayControl`` to initiate the Samsung 
+Multiple Display Control object as well as a simple command-line-tool for 
+direct control via a terminal.
+
+Usage
+=====
+
+.. code-block:: python
+
+    from samsung_mdc import MultipleDisplayControl
+    mdc = MultipleDisplayControl(192.168.1.100)
+    mdc.power  # print power status
+    mdc.power = !mdc.power  # toggle power
+    mdc.get_power()  # print new power status
+    mdc.set_power(False)  # off
+
+Or as self destruction object:
+
+.. code-block:: python
+
+    with MultipleDisplayControl(192.168.1.100) as mdc:
+        print(mdc)
+        mdc.power = True
+        mdc.source = 'hdmi2'
+        mdc.safety_lock = True
+
+
+Command-line-tool
+-----------------
+
+In the terminal execute
+.. code-block:: console
+
+    >>> samsung_mdc --help
+
+to show this help message and exit
+.. code-block:: console
+
+    usage: samsung_mdc [-h] [-p ..] [-i ..] [--version]
+                       host command [data [data ...]]
+
+    Samsung Multiple Display Control Protocol via TCP/IP
+
+    positional arguments:
+      host              Remote TV ipv4-address
+      command           Control command name
+      data              Data argument(s) for the set control command
+                        (controlling). If empty (default), set get control command
+                        is returned (viewing control state).
+
+    optional arguments:
+      -h, --help        show this help message and exit
+      -p .., --port ..  Remote TV port
+      -i .., --id ..    Remote TV id
+      --version         Print samsung_mdc version and exit
 
 
 Installation
