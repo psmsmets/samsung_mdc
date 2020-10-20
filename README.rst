@@ -11,14 +11,17 @@ A fork of Damien PLENARD's `python-mdc <https://git.vpgrp.io/noc/python-mdc>`_.
 Features
 ========
 
-Provides a Python3 class ``MultipleDisplayControl`` to initiate the Samsung 
-Multiple Display Control object as well as a simple command-line-tool for 
+Provides a Python3 **class** ``MultipleDisplayControl`` to initiate the Samsung 
+Multiple Display Control object as well as a simple **command-line-tool** for 
 direct control via a terminal.
 
 Usage
 =====
 
-Create an MDC object
+Class
+-----
+
+Create a Samsung Multiple Display Control object:
 
 .. code-block:: python
 
@@ -27,7 +30,7 @@ Create an MDC object
     >>> print(mdc)
     MDC #0xfe @192.168.1.100:1515
 
-By default no socket connection is initiated:
+By default connection is initiated by the socket:
 
 .. code-block:: python
 
@@ -53,7 +56,7 @@ Control the TV
     1
     >>> mdc.set_power(False)  # off
 
-Close the 
+Close the connection
 
 .. code-block:: python
 
@@ -61,14 +64,12 @@ Close the
     >>> print(mdc.connected)
     False
 
-
-Using the `with` statement the connection is initiated and terminated:
+Using the ``with`` statement the connection is initiated and terminated
+automatically:
 
 .. code-block:: python
 
     with MultipleDisplayControl(192.168.1.100) as mdc:
-        print(mdc)
-        print(mdc.connected)
         mdc.power = True
         mdc.source = 'hdmi2'
         mdc.safety_lock = True
