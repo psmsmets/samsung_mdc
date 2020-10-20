@@ -5,7 +5,7 @@ htmlcov
 .pytest_cache/
 
 # setuptools_scm
-samsung_mdcr/version.py
+samsung_mdc/version.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
