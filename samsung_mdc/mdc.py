@@ -131,6 +131,8 @@ class MultipleDisplayControl(object):
 
         self.__socket = socket.socket(family=socket.AF_INET,
                                       type=socket.SOCK_STREAM)
+        self.__socket.settimeout(5)
+
         return
 
     def __del__(self):
@@ -320,8 +322,13 @@ class MultipleDisplayControl(object):
         """
         if not self.connected:
             raise RuntimeError('socket is not connected')
-        return self._socket.recv(2)
-
+        data = None
+        try:
+            data = self.__socket.recv(4096)
+        except socket.timeout:
+            raise socket.timeout("Error! Socket did not get info, when expected")
+        return data
+    
     @property
     def power(self):
         """View/control the power state (0x11):
