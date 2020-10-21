@@ -23,14 +23,14 @@ https://git.vpgrp.io/noc/python-mdc
 
 
 # Import samsung_mdc modules
-from samsung_mdc import helpers, exceptions, mdc
+from samsung_mdc import util, mdc
 
 # Import MDC class
 from samsung_mdc.mdc import MultipleDisplayControl
 
 # Make only a selection available to __all__ to not clutter the namespace
 # Maybe also to discourage the use of `from samsung_mdc import *`.
-__all__ = ['helpers', 'exceptions', 'mdc', 'MultipleDisplayControl']
+__all__ = ['util', 'mdc', 'MultipleDisplayControl']
 
 # Version
 try:

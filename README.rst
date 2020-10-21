@@ -110,7 +110,7 @@ to show this help message and exit
 Installation
 ============
 
-Create a clone, or copy of the xcorr repository
+Create a clone, or copy of the samsung_mdc repository
 
 .. code-block:: console
 

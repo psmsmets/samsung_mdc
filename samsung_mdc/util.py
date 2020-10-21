@@ -1,9 +1,9 @@
 r"""
 
-:mod:`helpers` -- Helpers
-======================================
+:mod:`util` -- Utilities
+========================
 
-Samsung Multiple Display Control helpers
+Samsung Multiple Display Control utilities
 
 """
 

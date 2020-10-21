@@ -11,7 +11,7 @@ Samsung Multiple Display Control object
 import socket
 
 # relative imports
-from .helpers import is_valid_ipv4_address, verify_key_value
+from .util import is_valid_ipv4_address, verify_key_value
 
 
 __all__ = ['MultipleDisplayControl']
@@ -65,8 +65,8 @@ class MultipleDisplayControl(object):
     )
 
     def __init__(self, host: str = None, port: int = None,
-                 mdc_id: int = None, attrs: dict = None, **kwargs):
-        """Construct a Multiple Display Control (MDC) object.
+                 id: int = None, attrs: dict = None, **kwargs):
+        """Construct a Samsung Multiple Display Control (MDC) object.
 
         Parameters:
         -----------
@@ -76,8 +76,8 @@ class MultipleDisplayControl(object):
         port : `int`, optional
             Connection port [0, 65535]. Defaults to 1515.
 
-        mdc_id : `int`
-            MDC ID [0, 255]. Defaults to 254 for globing.
+        id : `int`
+            Display id [0, 255]. Defaults to 254 for globing.
 
         attrs : `dict`
             Dictionary of global attributes on this object
@@ -111,7 +111,7 @@ class MultipleDisplayControl(object):
         if kwargs:
             self.attrs = {**self.attrs, **kwargs}
 
-        self.__id = mdc_id or 254
+        self.__id = id or 254
         if not isinstance(self.__id, int):
             raise TypeError('mdc_id should be of type integer')
         if self.__id < 0 or self.__id > 255:
@@ -174,6 +174,59 @@ class MultipleDisplayControl(object):
                 self.port == other.port and
                 self.id == other.id)
 
+    def __getattr__(self, name: str):
+        if name not in {"__dict__", "__setstate__"}:
+            # this avoids an infinite loop when pickle looks for the
+            # __setstate__ attribute before the object is initialized
+            if name in self.attrs:
+                return self.attrs[name]
+        raise AttributeError(
+            "{!r} object has no attribute {!r}".format(
+                type(self).__name__, name
+            )
+        )
+
+    def __getitem__(self, name: str):
+        if name not in {"__dict__", "__setstate__"}:
+            # this avoids an infinite loop when pickle looks for the
+            # __setstate__ attribute before the object is initialized
+            if name in self.attrs:
+                return self.attrs[name]
+            elif name in [slot[2:] for slot in self.__slots__]:
+                return eval(f'self.{name}')
+        raise AttributeError(
+            "{!r} object has no attribute {!r}".format(
+                type(self).__name__, name
+            )
+        )
+
+    def __setitem__(self, name, value):
+        raise NotImplementedError(
+            "cannot set item %r on a %r object."
+            % (name, type(self).__name__)
+        )
+
+    def __setattr__(self, name, value):
+        """Objects with ``__slots__`` raise AttributeError if you try setting
+        an undeclared attribute. This is desirable, but the error message could
+        use some improvement.
+        """
+        try:
+            object.__setattr__(self, name, value)
+        except AttributeError as e:
+            # Don't accidentally shadow custom AttributeErrors, e.g.
+            # DataArray.dims.setter
+            if str(e) != "{!r} object has no attribute {!r}".format(
+                type(self).__name__, name
+            ):
+                raise
+            raise AttributeError(
+                "cannot set attribute %r on a %r object. Use the `set_attr()` "
+                "mutator (e.g., `mdc.set_attr('name', ...)` instead of "
+                "assigning variables."
+                % (name, type(self).__name__)
+            ) from e
+
     @property
     def host(self):
         return self.__host
@@ -187,16 +240,33 @@ class MultipleDisplayControl(object):
         return self.__id
 
     @property
-    def mdc_id(self):
-        return self.id
-
-    @property
     def connected(self):
         return self.__connected
 
     @property
     def _socket(self):
         return self.__socket
+
+    @property
+    def attrs(self):
+        """Dictionary of global attributes on this object"""
+        if self.__attrs is None:
+            self.__attrs = {}
+        return self.__attrs
+
+    @attrs.setter
+    def attrs(self, value):
+        self.__attrs = dict(value)
+
+    def set_attr(self, name: str, value):
+        """Set a global attribute on this object
+        """
+        self.__attrs[name] = value
+
+    def get_attr(self, name: str):
+        """Get a global attribute from this object
+        """
+        return self.attrs[name]
 
     def connect(self):
         """Connect the socket to the remote TV
@@ -251,63 +321,6 @@ class MultipleDisplayControl(object):
         if not self.connected:
             raise RuntimeError('socket is not connected')
         return self._socket.recv(16)
-
-    @property
-    def attrs(self):
-        """Dictionary of global attributes on this object"""
-        if self.__attrs is None:
-            self.__attrs = {}
-        return self.__attrs
-
-    @attrs.setter
-    def attrs(self, value):
-        self.__attrs = dict(value)
-
-    def __getattr__(self, name: str):
-        if name not in {"__dict__", "__setstate__"}:
-            # this avoids an infinite loop when pickle looks for the
-            # __setstate__ attribute before the object is initialized
-            if name in self.attrs:
-                return self.attrs[name]
-        raise AttributeError(
-            "{!r} object has no attribute {!r}".format(
-                type(self).__name__, name
-            )
-        )
-
-    def __getitem__(self, name: str):
-        if name not in {"__dict__", "__setstate__"}:
-            # this avoids an infinite loop when pickle looks for the
-            # __setstate__ attribute before the object is initialized
-            if name in self.attrs:
-                return self.attrs[name]
-            elif name in list(filter(None, [None if '__' in d else d
-                                            for d in self.__dir__()])):
-                return eval(f'self.{name}')
-        raise AttributeError(
-            "{!r} object has no attribute {!r}".format(
-                type(self).__name__, name
-            )
-        )
-
-    def __setattr__(self, name, value):
-        """Objects with ``__slots__`` raise AttributeError if you try setting
-        an undeclared attribute. This is desirable, but the error message could
-        use some improvement.
-        """
-        try:
-            object.__setattr__(self, name, value)
-        except AttributeError as e:
-            # Don't accidentally shadow custom AttributeErrors, e.g.
-            # DataArray.dims.setter
-            if str(e) != "{!r} object has no attribute {!r}".format(
-                type(self).__name__, name
-            ):
-                raise
-            raise AttributeError(
-                "cannot set attribute %r on a %r object."
-                % (name, type(self).__name__)
-            ) from e
 
     @property
     def power(self):
