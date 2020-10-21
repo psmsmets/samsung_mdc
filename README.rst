@@ -99,8 +99,8 @@ to show this help message and exit
                         video_wall_on, video_wall_user
       value             Data argument(s) for the `set control command`
                         (controlling). If empty (default), the returned `get
-                        control command` (viewing control state) is printed to
-                        stdout.
+                        control command` (viewing control state) value is printed
+                        to stdout.
 
     optional arguments:
       -h, --help        show this help message and exit
