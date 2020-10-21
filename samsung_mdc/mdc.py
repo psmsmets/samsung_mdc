@@ -320,7 +320,7 @@ class MultipleDisplayControl(object):
         """
         if not self.connected:
             raise RuntimeError('socket is not connected')
-        return self._socket.recv(16)
+        return self._socket.recv(2)
 
     @property
     def power(self):
@@ -550,7 +550,7 @@ class MultipleDisplayControl(object):
         self._send(self._get(0x5D))
         return self._recv()
 
-    def set_safete_lock(self, value):
+    def set_safety_lock(self, value):
         """Control the safety lock state (0x5D).
 
         Parameters:

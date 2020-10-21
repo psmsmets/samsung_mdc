@@ -36,7 +36,7 @@ def main():
         help=('Control command name. Allowed values are: '+', '.join(commands))
     )
     parser.add_argument(
-        'data', metavar='value', default=[], type=int, nargs='*',
+        'data', metavar='value', default=[], nargs='*',
         help=('Data argument(s) for the `set control command` (controlling). '
               'If empty (default), the `get control command` answer '
               '(viewing control state) is printed to stdout.')
@@ -58,15 +58,16 @@ def main():
     # init object and send command
     with MultipleDisplayControl(args.host, args.port, args.id) as ctrl:
         print(ctrl, end=' .. ')
-        if len(args.args) == 0:
+        if len(args.data) == 0:
             # get
             value = eval(f'ctrl.get_{args.command}()')
             print(f'{args.command} is {value}')
         else:
             # get
-            eval(f'ctrl.set_{args.command}(*args.args)')
-            args.args = args.args[0] if len(args.args) == 1 else args.args
-            print(f'{args.command} set to {args.args}')
+            args.data = [int(d) if d.isdigit() else d for d in args.data]
+            eval(f'ctrl.set_{args.command}(*args.data)')
+            args.data = args.data[0] if len(args.data) == 1 else args.data
+            print(f'{args.command} set to {args.data}')
 
 
 if __name__ == "__main__":
