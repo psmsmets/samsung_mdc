@@ -98,9 +98,9 @@ to show this help message and exit
                         mute, source, screen_size, video_wall_mode, safety_lock,
                         video_wall_on, video_wall_user
       value             Data argument(s) for the `set control command`
-                        (controlling). If empty (default), the returned `get
-                        control command` value (viewing control state) is printed
-                        to stdout.
+                        (controlling). If empty (default), the `get control
+                        command` answer (viewing control state) is printed to
+                        stdout.
 
     optional arguments:
       -h, --help        show this help message and exit

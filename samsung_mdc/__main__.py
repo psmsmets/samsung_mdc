@@ -38,8 +38,8 @@ def main():
     parser.add_argument(
         'data', metavar='value', default=[], type=int, nargs='*',
         help=('Data argument(s) for the `set control command` (controlling). '
-              'If empty (default), the returned `get control command` '
-              'value (viewing control state) is printed to stdout.')
+              'If empty (default), the `get control command` answer '
+              '(viewing control state) is printed to stdout.')
     )
     parser.add_argument(
         '-p', '--port', metavar='..', type=int, default=1515,
