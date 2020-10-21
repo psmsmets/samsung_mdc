@@ -39,7 +39,7 @@ def main():
         'data', metavar='value', default=[], type=int, nargs='*',
         help=('Data argument(s) for the `set control command` (controlling). '
               'If empty (default), the returned `get control command` '
-              '(viewing control state) value is printed to stdout.')
+              'value (viewing control state) is printed to stdout.')
     )
     parser.add_argument(
         '-p', '--port', metavar='..', type=int, default=1515,
