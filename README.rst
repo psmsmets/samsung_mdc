@@ -88,8 +88,7 @@ to show this help message and exit
 
 .. code-block:: console
 
-    usage: samsung_mdc [-h] [-p ..] [-i ..] [--version]
-                       host command [data [data ...]]
+    usage: samsung_mdc [-h] [-p ..] [-i ..] [-v] host command [value [value ...]]
 
     Samsung Multiple Display Control Protocol via TCP/IP
 
@@ -98,16 +97,16 @@ to show this help message and exit
       command           Control command name. Allowed values are: power, volume,
                         mute, source, screen_size, video_wall_mode, safety_lock,
                         video_wall_on, video_wall_user
-      data              Data argument(s) for the `set control command`
+      value             Data argument(s) for the `set control command`
                         (controlling). If empty (default), the returned `get
                         control command` (viewing control state) is printed to
                         stdout.
 
     optional arguments:
       -h, --help        show this help message and exit
-      -p .., --port ..  Remote TV port
-      -i .., --id ..    Remote TV id
-      --version         Print samsung_mdc version and exit
+      -p .., --port ..  Remote TV port (default: 1515)
+      -i .., --id ..    Remote TV id (default: 0xfe)
+      -v, --version     Print samsung_mdc version and exit
 
 
 Installation

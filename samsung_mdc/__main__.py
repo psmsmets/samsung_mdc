@@ -36,21 +36,21 @@ def main():
         help=('Control command name. Allowed values are: '+', '.join(commands))
     )
     parser.add_argument(
-        'data', metavar='data', default=[], type=int, nargs='*',
+        'data', metavar='value', default=[], type=int, nargs='*',
         help=('Data argument(s) for the `set control command` (controlling). '
               'If empty (default), the returned `get control command` '
               '(viewing control state) is printed to stdout.')
     )
     parser.add_argument(
         '-p', '--port', metavar='..', type=int, default=1515,
-        help='Remote TV port'
+        help='Remote TV port (default: 1515)'
     )
     parser.add_argument(
         '-i', '--id', metavar='..', type=int, default=254,
-        help='Remote TV id'
+        help='Remote TV id (default: 0xfe)'
     )
     parser.add_argument(
-        '--version', action='version', version=__version__,
+        '-v', '--version', action='version', version=__version__,
         help='Print samsung_mdc version and exit'
     )
     args = parser.parse_args()
