@@ -2,24 +2,24 @@
 samsung_mdc
 ***********
 
-Implementation of the Samsung Multiple Display Control Protocol via TCP/IP
-in Python3 as documented in the Smart Signage User Manual (Common Use)
+Python3 implementation of the Samsung Multiple Display Control Protocol via
+TCP/IP as documented in the Smart Signage User Manual (Common Use)
 LFDCOMNEN-01_Common-use_2018_Eng_20190329.0
 
-A fork of Damien PLENARD's `python-mdc <https://git.vpgrp.io/noc/python-mdc>`_.
+A fork of Damien Plenard's `python-mdc <https://git.vpgrp.io/noc/python-mdc>`_.
 
 Features
 ========
 
-Provides a Python3 **class** ``MultipleDisplayControl`` to initiate the Samsung 
+Provides a **class** ``MultipleDisplayControl`` to initiate the Samsung 
 Multiple Display Control object as well as a simple **command-line-tool** for 
 direct control via a terminal.
 
 Usage
 =====
 
-Class
------
+Object
+------
 
 Create a Samsung Multiple Display Control object
 
