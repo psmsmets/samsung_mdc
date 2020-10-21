@@ -27,19 +27,19 @@ def main():
         'host', metavar='host', type=str,
         help='Remote TV ipv4-address'
     )
+
+    commands = ('power', 'volume', 'mute', 'source', 'screen_size',
+                'video_wall_mode', 'safety_lock', 'video_wall_on',
+                'video_wall_user')
     parser.add_argument(
-        'command', metavar='command', choices=(
-            'power', 'volume', 'mute', 'source', 'screen_size',
-            'video_wall_mode', 'safety_lock', 'video_wall_on',
-            'video_wall_user',
-        ),
-        help=('Control command name.')
+        'command', metavar='command', choices=commands,
+        help=('Control command name. Allowed values are: '+', '.join(commands))
     )
     parser.add_argument(
         'data', metavar='data', default=[], type=int, nargs='*',
-        help=('Data argument(s) for the set control command (controlling). '
-              'If empty (default), set get control command is returned '
-              '(viewing control state).')
+        help=('Data argument(s) for the `set control command` (controlling). '
+              'If empty (default), the returned `get control command` '
+              '(viewing control state) is printed to stdout.')
     )
     parser.add_argument(
         '-p', '--port', metavar='..', type=int, default=1515,

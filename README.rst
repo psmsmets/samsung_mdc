@@ -95,10 +95,13 @@ to show this help message and exit
 
     positional arguments:
       host              Remote TV ipv4-address
-      command           Control command name
-      data              Data argument(s) for the set control command
-                        (controlling). If empty (default), set get control command
-                        is returned (viewing control state).
+      command           Control command name. Allowed values are: power, volume,
+                        mute, source, screen_size, video_wall_mode, safety_lock,
+                        video_wall_on, video_wall_user
+      data              Data argument(s) for the `set control command`
+                        (controlling). If empty (default), the returned `get
+                        control command` (viewing control state) is printed to
+                        stdout.
 
     optional arguments:
       -h, --help        show this help message and exit
