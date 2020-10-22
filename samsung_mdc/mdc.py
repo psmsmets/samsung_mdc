@@ -326,9 +326,10 @@ class MultipleDisplayControl(object):
         try:
             data = self.__socket.recv(4096)
         except socket.timeout:
-            raise socket.timeout("Error! Socket did not get info, when expected")
+            raise socket.timeout("Error! Socket did not get info, "
+                                 "when expected")
         return data
-    
+
     @property
     def power(self):
         """View/control the power state (0x11):
