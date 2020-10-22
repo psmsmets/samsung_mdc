@@ -28,7 +28,7 @@ setup(
               'mdc', 'socket', 'tcp/ip'],
     entry_points={
         'console_scripts': [
-           f'{NAME}=samsung_mdc.__main__:main',
+           f'{NAME}={NAME}.__main__:main',
         ],
     },
     scripts=[],
