@@ -64,9 +64,8 @@ class MultipleDisplayControl(object):
         "__connected",
     )
 
-    def __init__(self, host: str = None, port: int = None,
-                 id: int = None, attrs: dict = None,
-                 timeout: float = None, **kwargs):
+    def __init__(self, host: str, port: int = None, id: int = None,
+                 timeout: float = None, attrs: dict = None, **kwargs):
         """Construct a Samsung Multiple Display Control (MDC) object.
 
         Parameters:
@@ -77,11 +76,8 @@ class MultipleDisplayControl(object):
         port : `int`, optional
             Connection port [0, 65535]. Defaults to 1515.
 
-        id : `int`
+        id : `int`, optional
             Display id [0, 255]. Defaults to 254 for globing.
-
-        attrs : `dict`
-            Dictionary of global attributes on this object
 
         timeout : `float`, optional
             Set the timeout socket operation :func:`socket.settimeout(value)`
@@ -92,6 +88,9 @@ class MultipleDisplayControl(object):
             timeout period value has elapsed before the operation has
             completed. If zero is given, the socket is put in non-blocking
             mode. If `None` is given, the socket is put in blocking mode.
+
+        attrs : `dict`, optional
+            Dictionary of global attributes on this object
 
         **kwargs :
             Any kwargs are added to the global attributes.
@@ -117,17 +116,6 @@ class MultipleDisplayControl(object):
                 mdc.source = 'hdmi2'
                 mdc.safety_lock = True
         """
-        self.__connected = False
-        self.__attrs = dict(attrs) if attrs is not None else None
-        if kwargs:
-            self.attrs = {**self.attrs, **kwargs}
-
-        self.__id = id or 254
-        if not isinstance(self.__id, int):
-            raise TypeError('mdc_id should be of type integer')
-        if self.__id < 0 or self.__id > 255:
-            raise ValueError('mdc_id should be within [0, 255]')
-
         self.__host = host
         if not isinstance(self.__host, str):
             raise TypeError('host should be of type string')
@@ -140,11 +128,20 @@ class MultipleDisplayControl(object):
         if self.__port < 0 or self.__port > 65535:
             raise ValueError('port should be within [0, 65535]')
 
+        self.__id = id or 254
+        if not isinstance(self.__id, int):
+            raise TypeError('id should be of type integer')
+        if self.__id < 0 or self.__id > 255:
+            raise ValueError('id should be within [0, 255]')
+
+        self.__connected = False
+        self.__attrs = dict(attrs) if attrs is not None else None
+        if kwargs:
+            self.attrs = {**self.attrs, **kwargs}
+
         self.__socket = socket.socket(family=socket.AF_INET,
                                       type=socket.SOCK_STREAM)
         self.__socket.settimeout(timeout or 5.)
-
-        return
 
     def __del__(self):
         """Destruct the MDC object.
