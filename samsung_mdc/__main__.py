@@ -50,13 +50,23 @@ def main():
         help='Remote TV id (default: 0xfe)'
     )
     parser.add_argument(
+        '-t', '--timeout', metavar='..', type=float, default=5.,
+        help=('Set a timeout on blocking socket operations, in seconds '
+              '(default: 5.0). '
+              'Timeout > 0: raise timeout exception. '
+              'Timeout == 0: non-blocking mode. '
+              'Timeout < 0: blocking mode.')
+    )
+    parser.add_argument(
         '-v', '--version', action='version', version=__version__,
         help='Print samsung_mdc version and exit'
     )
     args = parser.parse_args()
+    args.timeout = None if args.timeout < 0. else args.timeout  # non-negative
 
     # init object and send command
-    with MultipleDisplayControl(args.host, args.port, args.id) as ctrl:
+    with MultipleDisplayControl(args.host, args.port, args.id,
+                                timeout=args.timeout) as ctrl:
         print(ctrl, end=' .. ')
         if len(args.data) == 0:
             # get
