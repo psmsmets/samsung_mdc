@@ -65,7 +65,8 @@ class MultipleDisplayControl(object):
     )
 
     def __init__(self, host: str = None, port: int = None,
-                 id: int = None, attrs: dict = None, **kwargs):
+                 id: int = None, attrs: dict = None,
+                 timeout: float = None, **kwargs):
         """Construct a Samsung Multiple Display Control (MDC) object.
 
         Parameters:
@@ -81,6 +82,16 @@ class MultipleDisplayControl(object):
 
         attrs : `dict`
             Dictionary of global attributes on this object
+
+        timeout : `float`, optional
+            Set the timeout socket operation :func:`socket.settimeout(value)`
+            (default: 5.).
+            The value argument can be a nonnegative floating point number
+            expressing seconds, or `None`. If a non-zero value is given,
+            subsequent socket operations will raise a timeout exception if the
+            timeout period value has elapsed before the operation has
+            completed. If zero is given, the socket is put in non-blocking
+            mode. If `None` is given, the socket is put in blocking mode.
 
         **kwargs :
             Any kwargs are added to the global attributes.
@@ -131,7 +142,7 @@ class MultipleDisplayControl(object):
 
         self.__socket = socket.socket(family=socket.AF_INET,
                                       type=socket.SOCK_STREAM)
-        self.__socket.settimeout(5)
+        self.__socket.settimeout(timeout or 5.)
 
         return
 
