@@ -88,25 +88,30 @@ to show this help message and exit
 
 .. code-block:: console
 
-    usage: samsung_mdc [-h] [-p ..] [-i ..] [-v] host command [value [value ...]]
+    usage: samsung_mdc [-h] [-p ..] [-i ..] [-t ..] [-v]
+                       host command [value [value ...]]
 
     Samsung Multiple Display Control Protocol via TCP/IP
 
     positional arguments:
-      host              Remote TV ipv4-address
-      command           Control command name. Allowed values are: power, volume,
-                        mute, source, screen_size, video_wall_mode, safety_lock,
-                        video_wall_on, video_wall_user
-      value             Data argument(s) for the `set control command`
-                        (controlling). If empty (default), the `get control
-                        command` answer (viewing control state) is printed to
-                        stdout.
+      host                 Remote TV ipv4-address
+      command              Control command name. Allowed values are: power,
+                           volume, mute, source, screen_size, video_wall_mode,
+                           safety_lock, video_wall_on, video_wall_user
+      value                Data argument(s) for the `set control command`
+                           (controlling). If empty (default), the `get control
+                           command` answer (viewing control state) is printed to
+                           stdout.
 
     optional arguments:
-      -h, --help        show this help message and exit
-      -p .., --port ..  Remote TV port (default: 1515)
-      -i .., --id ..    Remote TV id (default: 0xfe)
-      -v, --version     Print samsung_mdc version and exit
+      -h, --help           show this help message and exit
+      -p .., --port ..     Remote TV port (default: 1515)
+      -i .., --id ..       Remote TV id (default: 0xfe)
+      -t .., --timeout ..  Set a timeout on blocking socket operations, in seconds
+                           (default: 5.0). Timeout > 0: raise timeout exception.
+                           Timeout == 0: non-blocking mode. Timeout < 0: blocking
+                           mode.
+      -v, --version        Print samsung_mdc version and exit
 
 
 Installation
