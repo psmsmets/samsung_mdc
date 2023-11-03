@@ -11,8 +11,11 @@ Samsung Multiple Display Control command line tool.
 import argparse
 
 # relative imports
-from . import MultipleDisplayControl, __version__
-
+from .mdc import MultipleDisplayControl
+try:
+    from .version import version
+except (ValueError, ModuleNotFoundError, SyntaxError):
+    version = "VERSION-NOT-FOUND"
 
 def main():
     """A simple command-line-tool for direct control of the Samsung Multiple
@@ -58,7 +61,7 @@ def main():
               'Timeout < 0: blocking mode.')
     )
     parser.add_argument(
-        '-v', '--version', action='version', version=__version__,
+        '-v', '--version', action='version', version=version,
         help='Print samsung_mdc version and exit'
     )
     args = parser.parse_args()
