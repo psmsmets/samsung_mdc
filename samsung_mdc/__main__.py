@@ -11,7 +11,7 @@ Samsung Multiple Display Control command line tool.
 import argparse
 
 # relative imports
-from samsung_mdc import MultipleDisplayControl, __version__
+from . import MultipleDisplayControl, __version__
 
 
 def main():
